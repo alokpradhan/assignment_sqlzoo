@@ -75,17 +75,26 @@ SELECT matchid, mdate, COUNT(*)
 
 -- List every match with the goals scored by each team as shown. This will use "CASE WHEN" which has not been explained in any previous exercises. Notice in the query given every goal is listed. If it was a team1 goal then a 1 appears in score1, otherwise there is a 0. You could SUM this column to get a count of the goals scored by team1. Sort your result by mdate, matchid, team1 and team2.
 
-SELECT mdate, team1, sum(s1) as score1, team2, sum(s2) as score2
-FROM
-(SELECT mdate,
-  id,
+-- SELECT mdate, team1, sum(s1) as score1, team2, sum(s2) as score2
+-- FROM
+-- (SELECT mdate,
+--   id,
+--   team1,
+--   CASE WHEN teamid=team1 THEN 1 ELSE 0 END s1,
+--   team2,
+--   CASE WHEN teamid=team2 THEN 1 ELSE 0 END s2
+--   FROM game LEFT JOIN goal ON matchid = id) AS g
+-- GROUP BY id
+-- ORDER BY mdate, id, team1, team2
+
+SELECT mdate,
   team1,
-  CASE WHEN teamid=team1 THEN 1 ELSE 0 END s1,
+  SUM(CASE WHEN teamid=team1 THEN 1 ELSE 0 END) AS score1,
   team2,
-  CASE WHEN teamid=team2 THEN 1 ELSE 0 END s2
-  FROM game LEFT JOIN goal ON matchid = id) AS g
-GROUP BY id
-ORDER BY mdate, id, team1, team2
+  SUM(CASE WHEN teamid=team2 THEN 1 ELSE 0 END) AS score2
+  FROM game LEFT JOIN goal ON matchid = id
+  GROUP BY id
+  ORDER BY mdate, matchid, team1 and team2
 
 
 
