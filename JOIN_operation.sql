@@ -87,6 +87,18 @@ FROM
 GROUP BY id
 ORDER BY mdate, id, team1, team2
 
+-- OR
+
+SELECT mdate,
+  team1,
+  SUM(CASE WHEN teamid=team1 THEN 1 ELSE 0 END) score1,
+  team2,
+  SUM(CASE WHEN teamid=team2 THEN 1 ELSE 0 END) score2
+  FROM game JOIN goal ON matchid = id
+GROUP BY id
+
+
+
 
 
 
