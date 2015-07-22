@@ -83,3 +83,5 @@ SELECT name, continent,
               ELSE continent END AS "new continent"
 FROM world
 ORDER BY name
+
+Quiz: 7/7
